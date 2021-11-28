@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <div id="links"></div>
+    <title>Generate invoice</title>
+</head>
+
+<body>
+    <div>
+        <div class="w3-xlarge w3-padding w3-padding-16 w3-card w3-margin-bottom">Generate invoice</div>
+        <div class='w3-padding w3-border-bottom w3-margin-bottom'>
+            <div class="w3-large">Scan or enter barcode number</div>
+
+            <div class="w3-row-padding">
+                <div class="w3-col m10 s8">
+                    <input type="text" id="barcode" class="w3-input w3-border w3-margin-bottom" autofocus>
+                </div>
+                <div class="w3-col m2 s4">
+                    <button class="w3-ripple w3-block w3-button w3-blue" id="addBtn">Add</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="w3-row">
+            <div class="w3-col l8 s12 w3-padding">
+                <div class="w3-xlarge w3-padding-16"><b>Total <span id="gtotal"></span> Rs</b> </div>
+                <table id="table" class="w3-table-all w3-centered w3-padding-min">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Qty</th>
+                            <th>MRP</th>
+                            <th>DISC%</th>
+                            <th>DISC AMT</th>
+                            <th>NET AMT</th>
+                            <th>CGST%</th>
+                            <th>SGST%</th>
+                            <th>TOTAL</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody"></tbody>
+                </table>
+            </div>
+
+            <div class="w3-col l4 s12 w3-padding">
+                <div class="w3-xlarge"><b>Customer's Info</b></div>
+                <form action="invoice-print.php" method="POST">
+                    <p>
+                        <label for="">Name</label>
+                        <input name="name" type="text" class="w3-input w3-border">
+                    </p>
+                    <p>
+                        <label for="">Phone no.</label>
+                        <input name="phone" type="number" class="w3-input w3-border">
+                    </p>
+                    <p>
+                        <label for="">Email</label>
+                        <input name="email" type="email" class="w3-input w3-border">
+                    </p>
+                    <p>
+                        <label for="">Amount recived</label>
+                        <input name="amount" step="any" type="number" class="w3-input w3-border">
+                    </p>
+                    <p>
+                        <label for="" class="w3-margin-bottom">Payment mode</label> <br>
+                        <input type="radio" name="mode" value="cash" class="w3-margin-right"><label
+                            class="w3-margin-right w3-margin-top">Cash</label>
+                        <input type="radio" name="mode" value="card" class="w3-margin-right"><label
+                            class="w3-margin-right w3-margin-top">Card</label>
+                        <input type="radio" name="mode" value="upi" class="w3-margin-right"><label
+                            class="w3-margin-right w3-margin-top">UPI</label>
+                    </p>
+                    <input type="hidden" name="date" id="date">
+                    <input type="hidden" name="total" id="totalInput" value="0">
+                    <input type="hidden" id="itemArray" name="items">
+                    <input type="hidden" id="barcodes" name="barcodes">
+                    <button id='submitBtn' class="w3-button w3-blue">Complete order</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery-3.4.1.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#links').load("includes/front-config.htm");
+
+            var arr = [];
+
+            $('#submitBtn').click(()=>{
+                $('#table tr td input').each(function (e) {
+                    arr.push($(this).val());
+                });
+                var d = new Date();
+                $('#date').val(d.getDate()+"/"+(d.getMonth()+1)+"/"+d.getFullYear());
+                $('#itemArray').val(JSON.stringify(arr));
+            });
+
+        });
+    </script>
+</body>
+
+</html>

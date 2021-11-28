@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <div id="links"></div>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change password</title>
+</head>
+<body>
+    <div class="w3-bar w3-card">
+        <div class="w3-bar-item w3-xlarge">Change Password</div>
+    </div>
+
+    <div class="w3-col l4 m6 s11 w3-display-middle w3-card w3-padding w3-padding-16 w3-round">
+        <form action="changepass.php" method="POST">
+            <div>Select to change password</div>
+            <select name="tab" class="w3-input w3-border w3-margin-bottom">
+                <option value="login">Login</option>
+                <option value="database">Database</option>
+            </select>
+            <div class="w3-margin-bottom">
+                <label for="">Password</label>
+                <input id='pass' type="password" name="pass" class="w3-input w3-border" placeholder="Password">
+            </div>
+            <div class="w3-margin-bottom">
+                <label for="">Confirm Password</label>
+                <input id='cpass' type="password" name="cpass" class="w3-input w3-border" placeholder="Password">
+            </div>
+            <button id="submitBtn" class="w3-button w3-blue w3-margin-bottom" disabled>Change</button>
+            <div class="w3-center w3-small w3-text-red" id="msg"></div>
+        </form>
+    </div>
+
+    <script src="js/jquery-3.4.1.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#links').load("includes/front-config.htm");
+
+            $('#pass,#cpass').keyup(function(){
+                if($('#pass').val()==$('#cpass').val()){
+                    $('#submitBtn').attr('disabled', false);
+                }else{
+                    $('#submitBtn').attr('disabled', true);
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
